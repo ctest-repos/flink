@@ -27,6 +27,7 @@ import org.apache.flink.core.memory.DataOutputView;
 import org.apache.flink.types.StringValue;
 import org.apache.flink.util.CollectionUtil;
 
+import edu.illinois.ConfigTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,6 +86,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     public Configuration(Configuration other) {
         this.confData = new HashMap<>(other.confData);
+        ConfigTracker.injectConfig((arg1, arg2) -> setString(arg1, (String) arg2));
     }
 
     // --------------------------------------------------------------------------------------------
@@ -113,6 +115,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
             String key, Class<? extends T> defaultValue, ClassLoader classLoader)
             throws ClassNotFoundException {
         Optional<Object> o = getRawValue(key);
+        ConfigTracker.markParamAsUsed(key);
         if (!o.isPresent()) {
             return (Class<T>) defaultValue;
         }
@@ -152,6 +155,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @Deprecated
     public String getString(String key, String defaultValue) {
+        ConfigTracker.markParamAsUsed(key);
         return getRawValue(key).map(ConfigurationUtils::convertToString).orElse(defaultValue);
     }
 
@@ -163,6 +167,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public String getString(ConfigOption<String> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElseGet(configOption::defaultValue);
     }
 
@@ -176,6 +181,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public String getString(ConfigOption<String> configOption, String overrideDefault) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElse(overrideDefault);
     }
 
@@ -212,6 +218,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @Deprecated
     public int getInteger(String key, int defaultValue) {
+        ConfigTracker.markParamAsUsed(key);
         return getRawValue(key).map(ConfigurationUtils::convertToInt).orElse(defaultValue);
     }
 
@@ -223,6 +230,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public int getInteger(ConfigOption<Integer> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElseGet(configOption::defaultValue);
     }
 
@@ -237,6 +245,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public int getInteger(ConfigOption<Integer> configOption, int overrideDefault) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElse(overrideDefault);
     }
 
@@ -273,6 +282,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @Deprecated
     public long getLong(String key, long defaultValue) {
+        ConfigTracker.markParamAsUsed(key);
         return getRawValue(key).map(ConfigurationUtils::convertToLong).orElse(defaultValue);
     }
 
@@ -284,6 +294,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public long getLong(ConfigOption<Long> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElseGet(configOption::defaultValue);
     }
 
@@ -298,6 +309,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public long getLong(ConfigOption<Long> configOption, long overrideDefault) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElse(overrideDefault);
     }
 
@@ -335,6 +347,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @Deprecated
     public boolean getBoolean(String key, boolean defaultValue) {
+        ConfigTracker.markParamAsUsed(key);
         return getRawValue(key).map(ConfigurationUtils::convertToBoolean).orElse(defaultValue);
     }
 
@@ -346,6 +359,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public boolean getBoolean(ConfigOption<Boolean> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElseGet(configOption::defaultValue);
     }
 
@@ -360,6 +374,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public boolean getBoolean(ConfigOption<Boolean> configOption, boolean overrideDefault) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElse(overrideDefault);
     }
 
@@ -396,6 +411,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @Deprecated
     public float getFloat(String key, float defaultValue) {
+        ConfigTracker.markParamAsUsed(key);
         return getRawValue(key).map(ConfigurationUtils::convertToFloat).orElse(defaultValue);
     }
 
@@ -407,6 +423,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public float getFloat(ConfigOption<Float> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElseGet(configOption::defaultValue);
     }
 
@@ -421,6 +438,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public float getFloat(ConfigOption<Float> configOption, float overrideDefault) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElse(overrideDefault);
     }
 
@@ -458,6 +476,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @Deprecated
     public double getDouble(String key, double defaultValue) {
+        ConfigTracker.markParamAsUsed(key);
         return getRawValue(key).map(ConfigurationUtils::convertToDouble).orElse(defaultValue);
     }
 
@@ -469,6 +488,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public double getDouble(ConfigOption<Double> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElseGet(configOption::defaultValue);
     }
 
@@ -483,6 +503,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public double getDouble(ConfigOption<Double> configOption, double overrideDefault) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return getOptional(configOption).orElse(overrideDefault);
     }
 
@@ -517,6 +538,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      * @return the (default) value associated with the given key.
      */
     public byte[] getBytes(String key, byte[] defaultValue) {
+        ConfigTracker.markParamAsUsed(key);
         return getRawValue(key)
                 .map(
                         o -> {
@@ -551,6 +573,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @PublicEvolving
     public String getValue(ConfigOption<?> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return Optional.ofNullable(
                         getRawValueFromOption(configOption).orElseGet(configOption::defaultValue))
                 .map(String::valueOf)
@@ -573,6 +596,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
 
         Object rawValue = getRawValueFromOption(configOption).orElseGet(configOption::defaultValue);
         try {
+            ConfigTracker.markParamAsUsed(configOption.key());
             return ConfigurationUtils.convertToEnum(rawValue, enumClass);
         } catch (IllegalArgumentException ex) {
             final String errorMessage =
@@ -715,14 +739,15 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     @Override
     public <T> T get(ConfigOption<T> option) {
+        ConfigTracker.markParamAsUsed(option.key());
         return getOptional(option).orElseGet(option::defaultValue);
     }
 
     @Override
     public <T> Optional<T> getOptional(ConfigOption<T> option) {
         Optional<Object> rawValue = getRawValueFromOption(option);
+        ConfigTracker.markParamAsUsed(option.key());
         Class<?> clazz = option.getClazz();
-
         try {
             if (option.isList()) {
                 return rawValue.map(v -> ConfigurationUtils.convertToList(v, clazz));
@@ -826,7 +851,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
         if (key == null) {
             throw new NullPointerException("Key must not be null.");
         }
-
+        ConfigTracker.markParamAsUsed(key);
         synchronized (this.confData) {
             final Object valueFromExactKey = this.confData.get(key);
             if (!canBePrefixMap || valueFromExactKey != null) {
@@ -852,6 +877,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      * @return the value of the configuration or {@link Optional#empty()}.
      */
     private Optional<Object> getRawValueFromOption(ConfigOption<?> configOption) {
+        ConfigTracker.markParamAsUsed(configOption.key());
         return applyWithOption(configOption, this::getRawValue);
     }
 
