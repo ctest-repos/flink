@@ -77,6 +77,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
     /** Creates a new empty configuration. */
     public Configuration() {
         this.confData = new HashMap<>();
+        ConfigTracker.injectConfig((arg1, arg2) -> this.setString(arg1, (String) arg2));
     }
 
     /**
@@ -86,7 +87,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
      */
     public Configuration(Configuration other) {
         this.confData = new HashMap<>(other.confData);
-        ConfigTracker.injectConfig((arg1, arg2) -> setString(arg1, (String) arg2));
+        ConfigTracker.injectConfig((arg1, arg2) -> this.setString(arg1, (String) arg2));
     }
 
     // --------------------------------------------------------------------------------------------
@@ -95,6 +96,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
     public static Configuration fromMap(Map<String, String> map) {
         final Configuration configuration = new Configuration();
         map.forEach(configuration::setString);
+        ConfigTracker.injectConfig((arg1, arg2) -> configuration.setString(arg1, (String) arg2));
         return configuration;
     }
 
@@ -837,6 +839,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
             }
             this.confData.put(key, value);
         }
+        ConfigTracker.markParamAsSet(key);
     }
 
     private <T> void setValueInternal(String key, T value) {
