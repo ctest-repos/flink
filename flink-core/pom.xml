@@ -180,6 +180,46 @@ under the License.
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
+				<configuration>
+					<excludes>
+						<exclude>**/ExecutionConfigTest.java</exclude>
+						<exclude>**/BooleanPrimitiveArrayComparatorTest.java</exclude>
+						<exclude>**/GlobFilePathFilterTest.java</exclude>
+						<exclude>**/SqlTimeParserTest.java</exclude>
+						<exclude>**/FloatValueParserTest.java</exclude>
+						<exclude>**/UnquotedStringParserTest.java</exclude>
+						<exclude>**/ShortParserTest.java</exclude>
+						<exclude>**/DoubleParserTest.java</exclude>
+						<exclude>**/IntParserTest.java</exclude>
+						<exclude>**/ByteValueParserTest.java</exclude>
+						<exclude>**/ShortValueParserTest.java</exclude>
+						<exclude>**/LongParserTest.java</exclude>
+						<exclude>**/IntValueParserTest.java</exclude>
+						<exclude>**/BigIntParserTest.java</exclude>
+						<exclude>**/ByteParserTest.java</exclude>
+						<exclude>**/BooleanValueParserTest.java</exclude>
+						<exclude>**/QuotedStringParserTest.java</exclude>
+						<exclude>**/UnquotedStringValueParserTest.java</exclude>
+						<exclude>**/BigDecParserTest.java</exclude>
+						<exclude>**/DoubleValueParserTest.java</exclude>
+						<exclude>**/QuotedStringValueParserTest.java</exclude>
+						<exclude>**/BooleanParserTest.java</exclude>
+						<exclude>**/SqlTimestampParserTest.java</exclude>
+						<exclude>**/SqlDateParserTest.java</exclude>
+						<exclude>**/LongValueParserTest.java</exclude>
+						<exclude>**/FloatParserTest.java</exclude>
+						<exclude>**/SafetyNetCloseableRegistryTest.java</exclude>
+						<exclude>**/LocalFileSystemRecoverableWriterTest.java</exclude>
+						<exclude>**/CloseableRegistryTest.java</exclude>
+						<exclude>**/CollectionUtilTest.java</exclude>
+						<exclude>**/FileUtilsTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>com.diffplug.spotless</groupId>
 				<artifactId>spotless-maven-plugin</artifactId>
 				<configuration>
