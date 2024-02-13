@@ -42,7 +42,12 @@ under the License.
 
 	<dependencies>
 
-		<!-- core dependencies -->
+	  <!-- core dependencies -->
+	  <dependency>
+	    <groupId>edu.illinois</groupId>
+	    <artifactId>ctest4j-junit4</artifactId> <!-- or ctest4j-testng --> 
+	    <version>1.0.0</version>
+	  </dependency>
 
 		<dependency>
 			<groupId>org.apache.flink</groupId>
