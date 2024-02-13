@@ -1,7 +1,7 @@
 package org.apache.flink.configuration;
 
 import edu.illinois.CTestClass;
-import edu.illinois.CTestJUnit4Runner2;
+import edu.illinois.CTestJUnitRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -12,7 +12,7 @@ import static org.junit.Assert.fail;
  * Author: Shuai Wang
  * Date:  12/4/23
  */
-@RunWith(CTestJUnit4Runner2.class)
+@RunWith(CTestJUnitRunner.class)
 @CTestClass
 public class ExampleCTest {
     @Test
